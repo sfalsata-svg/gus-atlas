@@ -7,7 +7,23 @@ from sklearn.metrics.pairwise import cosine_similarity
 from openai import OpenAI
 
 # --- CONFIGURATION ---
-st.set_page_config(layout="wide", page_title="Gus:Atlas", page_icon="🍽️")
+# ... (le début du code reste pareil)
+
+# ================= INTERFACE =================
+
+# Sidebar : On essaie de récupérer la clé dans les secrets, sinon on demande à l'utilisateur
+api_key = st.secrets.get("OPENAI_KEY", None)
+
+with st.sidebar:
+    st.header("⚙️ Configuration")
+    # Si la clé n'est pas dans les secrets, on affiche le champ
+    if not api_key:
+        api_key = st.text_input("Clé API OpenAI", type="password")
+        st.info("Entrez une clé pour désactiver le mode démo.")
+    else:
+        st.success("✅ Clé API connectée via Secrets")
+
+# ... (La suite du code reste pareil)
 
 # --- CSS PERSONNALISÉ ---
 st.markdown("""
